@@ -45,6 +45,11 @@ RUN echo "Do over Remove this line"
 RUN cd $HOME && \
     git clone https://github.com/mousezero/PairZero.git .pairConfig &&\
     ./.pairConfig/install.sh
+    
+RUN cd /home/pair/workspace/demo && \
+    npm init --yes && \
+    npm install --save-dev babel-cli && \
+    npm install babel-preset-es2015 --save-dev
 
 USER root
 RUN locale-gen en_US.UTF-8
