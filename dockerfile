@@ -25,6 +25,8 @@ RUN mkdir ~/.cache && \
     vim +PluginInstall +qall
 
 # Start SSH
+RUN echo 'root:reduce' | chpasswd 
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN mkdir /var/run/sshd
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/g'  /etc/ssh/sshd_config
 
@@ -44,6 +46,8 @@ RUN cd $HOME && \
     ./.pairConfig/install.sh
 
 USER root
+
+RUN locale-gen en_US.UTF-8
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
