@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 MAINTAINER Russell Murray & Maxime Lasserre
 
 # Install Core Programs
-RUN apt-get update && apt-get install -y tmux vim git rubygems vim-nox openssh-server python-pip && \
+RUN apt-get update && apt-get install -y tmux vim git rubygems vim-nox openssh-server python-pip nodejs npm && \
     gem install tmuxinator
 
 # Pair User Setup
