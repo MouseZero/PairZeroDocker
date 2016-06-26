@@ -41,13 +41,14 @@ WORKDIR /home/pair
 RUN cd $HOME && \ 
     git clone https://github.com/spf13/spf13-vim.git && \
     ./spf13-vim/bootstrap.sh
+RUN echo "Do over Remove this line"
 RUN cd $HOME && \
     git clone https://github.com/mousezero/PairZero.git .pairConfig &&\
     ./.pairConfig/install.sh
 
 USER root
-
 RUN locale-gen en_US.UTF-8
+RUN chown pair:pair /usr/bin/
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
