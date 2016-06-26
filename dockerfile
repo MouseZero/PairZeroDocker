@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 
 MAINTAINER Russell Murray & Maxime Lasserre
 
-RUN apt-get update && apt-get install -y tmux vim git rubygems vim-nox openssh-server
+RUN apt-get update && apt-get install -y tmux vim git rubygems vim-nox openssh-server python-pip
 
 RUN mkdir /var/run/sshd
 RUN echo 'root:hi' | chpasswd
@@ -19,6 +19,17 @@ RUN mkdir -p /home/pair && \
 RUN chmod 777 /etc/ssh
 RUN echo 'pair:reduce' | chpasswd 
 
+ENV HOME /home/pair
+WORKDIR /home/pair
+
+RUN mkdir ~/.cache && \
+    mkdir ~/.cache/pip && \
+    pip install powerline-status && \
+    vim +PluginInstall +qall
+
+RUN mkdir ~/.tmuxinator
+RUN chown pair:pair -R ~/
+
 USER pair
 ENV HOME /home/pair
 WORKDIR /home/pair
@@ -31,16 +42,4 @@ RUN cd $HOME && git clone https://github.com/mousezero/PairZero.git .pairConfig 
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
-
-USER root
-
-RUN mkdir ~/.tmuxinator && \
-    cp ~/.pairConfig/tmuxConfig/Bable.yml ~/.tmuxinator/Bable.yml && \
-    apt-get -y install python-pip && \
-    mkdir ~/.cache/pip && \
-    pip install powerline-status && \
-    vim +PluginInstall +qall
-RUN chown pair:pair -R ~/
-
-USER pair
 
