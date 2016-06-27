@@ -33,6 +33,9 @@ RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/g'  /etc/ss
 # Get ready for and Switch User to "Pair"
 RUN mkdir ~/.tmuxinator && \
     chown pair:pair -R ~/
+
+RUN npm install npm -g
+
 USER pair
 ENV HOME /home/pair
 WORKDIR /home/pair
@@ -45,6 +48,10 @@ RUN echo "Do over Remove this line"
 RUN cd $HOME && \
     git clone https://github.com/mousezero/PairZero.git .pairConfig &&\
     ./.pairConfig/install.sh
+    
+USER root
+RUN ln /usr/bin/nodejs /usr/bin/node
+USER pair
     
 RUN cd /home/pair/workspace/demo && \
     npm init --yes && \
