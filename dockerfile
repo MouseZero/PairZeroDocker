@@ -44,7 +44,7 @@ WORKDIR /home/pair
 RUN cd $HOME && \ 
     git clone https://github.com/spf13/spf13-vim.git && \
     ./spf13-vim/bootstrap.sh
-RUN echo "Do over Remove this line"
+RUN echo "Stuff2"
 RUN cd $HOME && \
     git clone https://github.com/mousezero/PairZero.git .pairConfig &&\
     ./.pairConfig/install.sh
@@ -56,8 +56,10 @@ USER pair
 RUN cd /home/pair/workspace/demo && \
     npm init --yes && \
     npm install --save-dev babel-cli && \
-    npm install babel-preset-es2015 --save-dev
-
+    npm install babel-preset-es2015 --save-dev && \
+    npm install --save-dev babel-polyfill && \
+    mv /home/pair/.pairConfig/npm/babelrc ./.bablerc
+    
 USER root
 RUN locale-gen en_US.UTF-8
 RUN chown pair:pair /usr/bin/
